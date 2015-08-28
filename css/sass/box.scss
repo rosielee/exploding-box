@@ -1,3 +1,5 @@
+@import "mixins";
+
 // ========================================
 // colours
 // ========================================
@@ -42,13 +44,13 @@ $explode : 400px;
 
 .box {
     // transform: rotate3d(1,0,0,-40deg);
-    transform: rotateX(0deg) rotateY(0deg);
+    @include prefix( transform, rotateX(0deg) rotateY(0deg) );
+    @include prefix( transform-style, preserve-3d );
     position: absolute;
     top: 25%;
     left: 25%;
     width: $width;
     height: 355px;
-    transform-style: preserve-3d;
 }
 
 .panel {
@@ -66,42 +68,42 @@ $explode : 400px;
     width: $width;
     height: $height;
     background-color: $red;
-    transform: translate3d(0px, 0px, $height_small / 2);
+    @include prefix( transform, translate3d(0px, 0px, $height_small / 2) );
 }
 
 .back {
     width: $width;
     height: $height;
     background-color: $red;
-    transform: rotateY(180deg) translate3d(0px, 0px, $height_small / 2);
+    @include prefix( transform, rotateY(180deg) translate3d(0px, 0px, $height_small / 2) );
 }
 
 .top {
     width: $width;
     height: $height_small;
     background-color: $yellow;
-    transform: rotateX(90deg) translate3d(0px, 0px, $height_small / 2);
+    @include prefix( transform, rotateX(90deg) translate3d(0px, 0px, $height_small / 2) );
 }
 
 .bottom {
     width: $width;
     height: $height_small;
     background-color: $yellow;
-    transform: rotateX(-90deg) translate3d(0px, 0px, 317px);
+    @include prefix( transform, rotateX(-90deg) translate3d(0px, 0px, 317px) );
 }
 
 .left {
     width: $height_small;
     height: $height;
     background-color: $purple;
-    transform: rotateY(-90deg) translate3d(0px, 0px, $height_small / 2);
+    @include prefix( transform, rotateY(-90deg) translate3d(0px, 0px, $height_small / 2) );
 }
 
 .right {
     width: $height_small;
     height: $height;
     background-color: $purple;
-    transform: rotateY(90deg) translate3d(0px, 0px, 213px);
+    @include prefix( transform, rotateY(90deg) translate3d(0px, 0px, 213px) );
 }
 
 // ========================================
@@ -110,22 +112,22 @@ $explode : 400px;
 
 .explode {
     .top {
-        transform: rotateX(90deg) translate3d(0px, 0px, $explode + $height_small / 2);
+        @include prefix( transform, rotateX(90deg) translate3d(0px, 0px, $explode + $height_small / 2) );
     }
     .bottom {
-        transform: rotateX(-90deg) translate3d(0px, 0px, $explode + 317px);
+        @include prefix( transform, rotateX(-90deg) translate3d(0px, 0px, $explode + 317px) );
     }
     .left {
-        transform: rotateY(-90deg) translate3d(0px, 0px, $explode + 37);
+        @include prefix( transform, rotateY(-90deg) translate3d(0px, 0px, $explode + 37) );
     }
     .right {
-        transform: rotateY(90deg) translate3d(0px, 0px, $explode + 213);
+        @include prefix( transform, rotateY(90deg) translate3d(0px, 0px, $explode + 213) );
     }
     .front {
-        transform: rotateY(0deg) translate3d(0px, 0px, $explode + $height_small / 2);
+        @include prefix( transform, rotateY(0deg) translate3d(0px, 0px, $explode + $height_small / 2) );
     }
     .back {
-        transform: rotateY(180deg) translate3d(0px, 0px, $explode + $height_small / 2);
+        @include prefix( transform, rotateY(180deg) translate3d(0px, 0px, $explode + $height_small / 2) );
     }
 }
 
@@ -133,18 +135,21 @@ $explode : 400px;
 // rotate
 // ========================================
 
-.rotate {
-    animation-name: rotate;
-    animation-duration: 6000ms;
-    animation-timing-function: linear; // cubic-bezier(0, 0.9, 0.32, 1.04);
-    animation-fill-mode: forwards;
-    animation-delay: initial;
-    animation-iteration-count: infinite;
-    animation-direction: initial;
-    animation-play-state: initial;
+// animation-name, rotate );
+// animation-duration, 6000ms );
+// animation-timing-function, linear ); // cubic-bezier(0, 0.9, 0.32, 1.04)
+// animation-fill-mode, forwards );
+// animation-delay, initial );
+// animation-iteration-count, infinite );
+// animation-direction, initial );
+// animation-play-state, initial );
+
+
+@include keyframes(rotate) {
+    0%   { @include prefix (transform, rotateX(0deg  ) rotateY(360deg) ); }
+    100% { @include prefix (transform, rotateX(360deg) rotateY(0deg) ); }
 }
 
-@keyframes rotate {
-    0%   { transform: rotateX(0deg  ) rotateY(360deg); }
-    100% { transform: rotateX(360deg) rotateY(0deg); }
+.rotate {
+    @include prefix(animation, rotate 6000ms linear infinite);
 }
